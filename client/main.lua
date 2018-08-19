@@ -39,8 +39,8 @@ function OpenShopMenu(zone)
 		'default', GetCurrentResourceName(), 'shop',
 		{
 
-		css =  'superete',
-		title =  'Rayons',
+		title    = _U('shop'),
+		align    = 'bottom-right',
 		elements = elements
 
 		},
