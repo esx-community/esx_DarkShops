@@ -1,9 +1,7 @@
-ESX                           = nil
+ESX = nil
 local HasAlreadyEnteredMarker = false
-local LastZone                = nil
-local CurrentAction           = nil
-local CurrentActionMsg        = ''
-local CurrentActionData       = {}
+local LastZone, CurrentAction, CurrentActionMsg 
+local CurrentActionData = {}
 
 Citizen.CreateThread(function()
 	while ESX == nil do
@@ -20,7 +18,6 @@ Citizen.CreateThread(function()
 	end)
 end)
 
-
 function OpenShopMenu(zone)
 	local elements = {}
 	for i=1, #Config.Zones[zone].Items, 1 do
@@ -35,25 +32,18 @@ function OpenShopMenu(zone)
 	end
 
 	ESX.UI.Menu.CloseAll()
-	ESX.UI.Menu.Open(
-		'default', GetCurrentResourceName(), 'shop',
-		{
-
+	ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'shop', {
 		title    = _U('shop'),
 		align    = 'bottom-right',
 		elements = elements
-
-		},
-		function(data, menu)
+		}, function(data, menu)
 			TriggerServerEvent('esx_dark:buyItem', data.current.value, data.current.price)
-		end,
-		function(data, menu)
+		end, function(data, menu)
 			menu.close()
 			CurrentAction     = 'shop_menu'
 			CurrentActionMsg  = _U('press_menu')
 			CurrentActionData = {zone = zone}
-		end
-	)  
+		end)  
 end
 
 AddEventHandler('esx_dark:hasEnteredMarker', function(zone)
@@ -61,14 +51,12 @@ AddEventHandler('esx_dark:hasEnteredMarker', function(zone)
 	CurrentAction     = 'shop_menu'
 	CurrentActionMsg  = _U('press_menu')
 	CurrentActionData = {zone = zone}
-
 end)
 
 AddEventHandler('esx_dark:hasExitedMarker', function(zone)
 
 	CurrentAction = nil
 	ESX.UI.Menu.CloseAll()
-
 end)
 
 -- Display markers
@@ -132,9 +120,7 @@ Citizen.CreateThread(function()
         end
 
         CurrentAction = nil
-
       end
-
     end
   end
 end)
